@@ -20,7 +20,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 CLI_NAME = "API-hacker"
 HTTP_UA = 'Mozilla/5.0'
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 
 def replace_id(url):
     """Replace the {id} part of the URL with a random number between 1 and 100."""
@@ -47,10 +47,12 @@ def populate_headers(set_header):
             key, value = header.split(':', 1)
             headers[key.strip()] = value.strip()
 
+    headers['Content-Type'] = "application/json"
+    headers['Accept'] = "application/json"
     headers['User-Agent'] = HTTP_UA
     return headers
 
-def send_request(method, url, proxy, test_number, timeout, set_header, verify):
+def send_request(method, url, proxy, timeout, set_header, verify):
     # Set up the proxies for the request
     proxies = {
         'http': proxy,
@@ -75,7 +77,7 @@ def send_request(method, url, proxy, test_number, timeout, set_header, verify):
     elif method == 'patch':
         response = requests.patch(url, proxies=proxies ,timeout=timeout, verify=verify, headers=headers)
     else:
-        print(f'Unknown method {method} for path {path}')
+        print(f'Unknown method {method} for path {url}')
         return
 
     # Print the response status code and body
@@ -181,7 +183,7 @@ def main():
                 print(f"{test_number}/{total_tests} - {method.upper()} {url}")
 
                 # Start a new thread to send the HTTP request
-                executor.submit(send_request, method, url, args.proxy, test_number, args.timeout, args.header, args.tls_verify)
+                executor.submit(send_request, method, url, args.proxy, args.timeout, args.header, args.tls_verify)
 
                 # Delay in ms before starting the next thread
                 time.sleep(args.delay)
