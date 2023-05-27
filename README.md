@@ -3,7 +3,16 @@ Reads and Swagger/OpenAPI JSON file and routes the requests via Burp Suite
 
 ## Arguments
 ```
-usage: api-hacker.py [-h] [--delay DELAY] [--threads THREADS] [--proxy PROXY] [--timeout TIMEOUT] [--base_url BASE_URL] --openapi_file OPENAPI_FILE [-H HEADER] [--verify] [--no-verify] [--version]
+[-h] 
+[--delay DELAY] 
+[--threads THREADS] 
+[--proxy PROXY] 
+[--timeout TIMEOUT] 
+[--base_url BASE_URL] 
+--openapi_file OPENAPI_FILE 
+[-H HEADER] 
+[--verify] [--no-verify] 
+[--version]
 ```
 
 ## Example
